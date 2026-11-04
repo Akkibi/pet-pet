@@ -33,6 +33,6 @@ jobs:
         run: npm publish --provenance --access public
         working-directory: packages/pet-pet
       - name: GitHub release
-        run: gh release create "$GITHUB_REF_NAME" packages/pet-pet/pet-pet-*.tgz --title "$GITHUB_REF_NAME" --generate-notes
+        run: gh release create "$GITHUB_REF_NAME" packages/pet-pet/*.tgz --title "$GITHUB_REF_NAME" --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
