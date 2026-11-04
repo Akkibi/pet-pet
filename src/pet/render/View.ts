@@ -1,7 +1,12 @@
+import type { Appearance } from '../config'
 import type { Facing } from '../types'
+import { drawHamster } from './layers'
+import type { Pose } from './pose'
 import type { Strip } from './strips'
 
 export const CANVAS = { w: 2, h: 2.45, ax: 1, ay: 1.68, cy: 1.22 }
+const TURN_HOP = 0.05
+const TURN_MIN = 0.14
 
 const css = (el: HTMLElement, s: Partial<CSSStyleDeclaration>) => Object.assign(el.style, s)
 
@@ -18,7 +23,10 @@ export class View {
   u = 64
   dpr = 1
   mode: ViewMode = 'anim'
-  private facing: Facing = 1
+  turnTime = 0.18
+  private turn = 0
+  private snapTurn = true
+  private turnKey = ''
   private lastKey = ''
   private lastPos = ''
   private lastShadow = ''
@@ -83,6 +91,7 @@ export class View {
 
   setMode(mode: ViewMode, force = false) {
     if (mode === this.mode && !force) return
+    if (mode !== this.mode) this.snapTurn = true
     this.mode = mode
     const u = this.u
     const top = mode === 'anim' ? CANVAS.ay : CANVAS.cy
@@ -90,17 +99,39 @@ export class View {
       left: `${-CANVAS.ax * u}px`,
       top: `${-top * u}px`,
       transformOrigin: `${CANVAS.ax * u}px ${top * u}px`,
-      transform: mode === 'anim' && this.facing < 0 ? 'scaleX(-1)' : 'none',
     })
     const hy = mode === 'anim' ? -0.74 : -0.36
     css(this.hitbox, { left: `${-0.525 * u}px`, top: `${hy * u}px` })
+    this.turnKey = ''
+    this.applyTurn()
     this.lastKey = ''
   }
 
-  setFacing(f: Facing) {
-    if (f === this.facing) return
-    this.facing = f
-    if (this.mode === 'anim') this.canvas.style.transform = f < 0 ? 'scaleX(-1)' : 'none'
+  setFacing(f: Facing, dt: number) {
+    const goal = f > 0 ? 0 : Math.PI
+    if (this.snapTurn || this.turnTime <= 0) this.turn = goal
+    else if (this.turn !== goal) {
+      const step = (Math.PI * dt) / this.turnTime
+      const d = goal - this.turn
+      this.turn = Math.abs(d) <= step ? goal : this.turn + Math.sign(d) * step
+    }
+    this.snapTurn = false
+    this.applyTurn()
+  }
+
+  private applyTurn() {
+    let tf = 'none'
+    if (this.mode === 'anim') {
+      const c = Math.cos(this.turn)
+      const s = Math.sin(this.turn)
+      if (s > 0.01) {
+        const sx = (c < 0 ? -1 : 1) * Math.max(TURN_MIN, Math.abs(c))
+        tf = `translateY(${(-TURN_HOP * s * this.u).toFixed(2)}px) scaleX(${sx.toFixed(3)})`
+      } else if (c < 0) tf = 'scaleX(-1)'
+    }
+    if (tf === this.turnKey) return
+    this.turnKey = tf
+    this.canvas.style.transform = tf
   }
 
   place(x: number, y: number) {
@@ -138,11 +169,19 @@ export class View {
   }
 
   drawLive(draw: (ctx: CanvasRenderingContext2D) => void) {
+    this.paint(CANVAS.cy, draw)
+  }
+
+  drawPose(pose: Pose, look: Appearance) {
+    this.paint(CANVAS.ay, (ctx) => drawHamster(ctx, pose, look, this.u))
+  }
+
+  private paint(ay: number, draw: (ctx: CanvasRenderingContext2D) => void) {
     this.lastKey = ''
-    const { ctx } = this
+    const { ctx, u, dpr } = this
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    ctx.setTransform(this.dpr, 0, 0, this.dpr, CANVAS.ax * this.u * this.dpr, CANVAS.cy * this.u * this.dpr)
+    ctx.setTransform(dpr, 0, 0, dpr, Math.round(CANVAS.ax * u * dpr), Math.round(ay * u * dpr))
     draw(ctx)
   }
 

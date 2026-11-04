@@ -16,6 +16,7 @@ export {
   type FaceStyle,
   type ConfigPatch,
   type Debug,
+  type Motion,
   type Palette,
   type PetConfig,
   type PetOptions,

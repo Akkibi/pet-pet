@@ -59,6 +59,11 @@ export interface Behavior {
   watchTyping: boolean
 }
 
+export interface Motion {
+  blend: number
+  turnTime: number
+}
+
 export interface Platforms {
   auto: boolean
   selector: string
@@ -78,6 +83,7 @@ export interface PetConfig {
   appearance: Appearance
   physics: Physics
   behavior: Behavior
+  motion: Motion
   platforms: Platforms
   debug: Debug
 }
@@ -142,6 +148,7 @@ export const DEFAULT_CONFIG: PetConfig = {
     clumsiness: 0.15,
     watchTyping: true,
   },
+  motion: { blend: 1, turnTime: 0.18 },
   platforms: {
     auto: true,
     selector: '[data-pet-platform]',
@@ -162,6 +169,7 @@ export interface PetOptions {
   appearance?: Partial<Appearance>
   physics?: Partial<Physics>
   behavior?: Partial<Behavior>
+  motion?: Partial<Motion>
   platforms?: Partial<Platforms>
   debug?: Partial<Debug>
   spawn?: { x?: number; y?: number }
@@ -181,6 +189,7 @@ export const mergeConfig = (base: PetConfig, patch: ConfigPatch): PetConfig => (
   },
   physics: { ...base.physics, ...patch.physics },
   behavior: { ...base.behavior, ...patch.behavior },
+  motion: { ...base.motion, ...patch.motion },
   platforms: { ...base.platforms, ...patch.platforms },
   debug: { ...base.debug, ...patch.debug },
 })

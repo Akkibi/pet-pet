@@ -129,10 +129,12 @@ export function* follow(c: PetCtx): Co {
       continue
     }
     b.stop()
-    b.face(dx)
-    const above = cur.y < b.y - c.u * 1.1
-    const below = cur.y > b.y + c.u * 0.1
-    c.anim.play(d < c.u * 0.9 ? 'sniff' : above ? 'curious' : below ? 'curiousDown' : 'idle')
+    if (Math.abs(dx) > c.u * 0.3) b.face(dx)
+    const was = c.anim.name
+    const above = cur.y < b.y - c.u * (was === 'curious' ? 0.9 : 1.1)
+    const below = cur.y > b.y + c.u * (was === 'curiousDown' ? 0 : 0.15)
+    const near = d < c.u * (was === 'sniff' ? 1.1 : 0.9)
+    c.anim.play(near ? 'sniff' : above ? 'curious' : below ? 'curiousDown' : 'idle')
     still += dt
     if (still > 1.4 && above) {
       still = 0

@@ -16,6 +16,7 @@ export const locomotion = {
     }),
   },
   walk: {
+    ease: 0.14,
     frames: 8,
     fps: 12,
     loop: true,
@@ -29,6 +30,7 @@ export const locomotion = {
     }),
   },
   run: {
+    ease: 0.14,
     frames: 6,
     fps: 16,
     loop: true,
@@ -56,6 +58,7 @@ export const locomotion = {
     },
   },
   crouch: {
+    ease: 0,
     frames: 6,
     fps: 20,
     loop: false,
@@ -65,6 +68,7 @@ export const locomotion = {
     },
   },
   jumpUp: {
+    ease: 0,
     frames: 4,
     fps: 12,
     loop: false,
@@ -90,6 +94,7 @@ export const locomotion = {
     },
   },
   jumpDown: {
+    ease: 0,
     frames: 4,
     fps: 12,
     loop: false,
@@ -115,6 +120,7 @@ export const locomotion = {
     },
   },
   fall: {
+    ease: 0,
     frames: 4,
     fps: 10,
     loop: true,
@@ -131,6 +137,7 @@ export const locomotion = {
     }),
   },
   land: {
+    ease: 0,
     frames: 6,
     fps: 18,
     loop: false,
@@ -140,6 +147,7 @@ export const locomotion = {
     },
   },
   landHard: {
+    ease: 0,
     frames: 12,
     fps: 16,
     loop: false,
@@ -156,6 +164,7 @@ export const locomotion = {
     },
   },
   climb: {
+    ease: 0,
     frames: 10,
     fps: 14,
     loop: false,
@@ -180,6 +189,7 @@ export const locomotion = {
     },
   },
   hang: {
+    ease: 0,
     frames: 4,
     fps: 8,
     loop: true,

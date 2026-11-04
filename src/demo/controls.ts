@@ -15,6 +15,7 @@ import {
 const A = DEFAULT_CONFIG.appearance
 const P = DEFAULT_CONFIG.physics
 const B = DEFAULT_CONFIG.behavior
+const M = DEFAULT_CONFIG.motion
 
 export const LEVA_THEME = {
   colors: {
@@ -118,6 +119,12 @@ export function usePetControls(pet: Pet | null) {
     { collapsed: true },
   )
 
+  const motion = useControls(
+    'Transitions',
+    { blend: range(M.blend, 0, 2.5, 0.05), turnTime: range(M.turnTime, 0, 0.6) },
+    { collapsed: true },
+  )
+
   useControls(
     'Réactions',
     Object.fromEntries(REACTION_NAMES.map((n) => [n, button(() => void pet?.react(n))])),
@@ -136,9 +143,9 @@ export function usePetControls(pet: Pet | null) {
   const debug = useControls('Debug', { surfaces: false, state: false }, { collapsed: true })
 
   const { taille, pelage: _p, forme: _f, visage, ...appearance } = look
-  const key = JSON.stringify([taille, appearance, physics, behavior, debug, visage])
+  const key = JSON.stringify([taille, appearance, physics, behavior, debug, visage, motion])
   useEffect(() => {
-    const [size, a, ph, be, db, v] = JSON.parse(key)
-    pet?.set({ size: `${size}vh`, appearance: { ...a, face: v }, physics: ph, behavior: be, debug: db })
+    const [size, a, ph, be, db, v, mo] = JSON.parse(key)
+    pet?.set({ size: `${size}vh`, appearance: { ...a, face: v }, physics: ph, behavior: be, debug: db, motion: mo })
   }, [pet, key])
 }

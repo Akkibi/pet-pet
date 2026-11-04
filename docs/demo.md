@@ -4,7 +4,7 @@
 
 ## Leva (`src/demo/controls.ts`)
 
-Themed with the project palette (`LEVA_THEME`). Folders: Apparence (size in vh, fur preset, shape preset, colors, silhouette, face), Physique, Comportement, Réactions (one button each), Actions (feed, sleep, wake, say, rescan), Debug (surfaces overlay, task/anim label). Values are pushed with `pet.set`.
+Themed with the project palette (`LEVA_THEME`). Folders: Apparence (size in vh, fur preset, shape preset, colors, silhouette, face), Physique, Comportement, Transitions (blend multiplier, turn time), Réactions (one button each), Actions (feed, sleep, wake, say, rescan), Debug (surfaces overlay, task/anim label). Values are pushed with `pet.set`.
 
 ## Pages (`src/demo/pages/`)
 

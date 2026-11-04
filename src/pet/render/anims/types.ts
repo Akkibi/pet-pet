@@ -11,6 +11,7 @@ export interface AnimDef {
   fps: number
   loop: boolean
   box?: Partial<AnimBox>
+  ease?: number
   pose: (p: number, i: number) => Partial<Pose>
 }
 

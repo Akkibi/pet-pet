@@ -1,8 +1,8 @@
 import type { Appearance } from '../config'
 import { ANIMS, type AnimName } from './anims'
 import { boxOf } from './anims/types'
+import { framePose } from './blend'
 import { drawHamster } from './layers'
-import { makePose } from './pose'
 
 export interface Strip {
   name: AnimName
@@ -29,14 +29,13 @@ export const bakeStrip = (name: AnimName, look: Appearance, u: number, dpr: numb
   const ctx = canvas.getContext('2d')
   if (!ctx) throw new Error('pet-pet: 2d context unavailable')
   for (let i = 0; i < def.frames; i++) {
-    const p = def.loop ? i / def.frames : def.frames > 1 ? i / (def.frames - 1) : 1
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.save()
     ctx.beginPath()
     ctx.rect(i * fw, 0, fw, fh)
     ctx.clip()
     ctx.setTransform(dpr, 0, 0, dpr, i * fw + ax, ay)
-    drawHamster(ctx, makePose(def.pose(p, i)), look, u)
+    drawHamster(ctx, framePose(def, i), look, u)
     ctx.restore()
   }
   return { name, canvas, frames: def.frames, fw, fh, ax, ay }

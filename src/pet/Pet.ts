@@ -125,7 +125,7 @@ export class Pet {
     window.addEventListener('resize', this.onResize)
     const b = this.world.bounds
     this.body.place(o.spawn?.x ?? b.left + (b.right - b.left) * (0.25 + Math.random() * 0.5), o.spawn?.y ?? b.top + this.u, null)
-    this.applyDebug()
+    this.applyConfig()
     const idle = window.requestIdleCallback?.bind(window) ?? ((f: () => void) => window.setTimeout(f, 300))
     idle(() => this.bank.prewarm())
     this.raf = requestAnimationFrame(this.frame)
@@ -165,7 +165,7 @@ export class Pet {
       this.anim.update(dt)
     }
     this.updateSeeds(dt)
-    this.render(t)
+    this.render(t, dt)
   }
 
   private grab(x: number, y: number) {
@@ -174,6 +174,7 @@ export class Pet {
     if (!this.rag) {
       const b = this.body
       this.brain.pause(true)
+      this.anim.snap()
       this.rag = new Ragdoll(this.u, b.x, b.y - BODY_CY * this.u, b.vx, b.vy, b.facing)
       b.place(b.x, b.y, null)
       this.view.setMode('ragdoll')
@@ -236,7 +237,7 @@ export class Pet {
     this.view.placeShadow(x, top, 0.45 + 0.55 * k, k)
   }
 
-  private render(t: number) {
+  private render(t: number, dt: number) {
     const v = this.view
     const u = this.u
     const b = this.body
@@ -248,9 +249,11 @@ export class Pet {
       this.placeShadow(c.x, c.y + u * BODY_CY)
       this.bubble.update(t, c.x, c.y - u * 0.55, this.world.bounds)
     } else {
-      v.setFacing(b.facing)
+      v.setFacing(b.facing, dt)
       v.place(b.x, b.y)
-      v.drawStrip(this.bank.get(this.anim.name), this.anim.frame)
+      const strip = this.bank.get(this.anim.name)
+      if (this.anim.blending) v.drawPose(this.anim.pose(), this.cfg.appearance)
+      else v.drawStrip(strip, this.anim.frame)
       this.placeShadow(b.x, b.y)
       const h = headPoint(this.ctx)
       this.bubble.update(t, h.x, h.y, this.world.bounds)
@@ -266,7 +269,9 @@ export class Pet {
     this.debug?.draw(this.world.version, this.world.surfaces, this.world.bounds, b.surface?.id ?? null)
   }
 
-  private applyDebug() {
+  private applyConfig() {
+    this.anim.blendScale = this.cfg.motion.blend
+    this.view.turnTime = this.cfg.motion.turnTime
     const on = this.cfg.debug.surfaces
     if (on && !this.debug) this.debug = new DebugOverlay(this.view.layer)
     else if (!on && this.debug) {
@@ -326,7 +331,7 @@ export class Pet {
     if (this.cfg.size !== prev.size || this.cfg.maxDpr !== prev.maxDpr) this.resizeAt = 0
     else if (this.bank.configure(this.cfg.appearance, this.u, this.dpr)) this.view.invalidate()
     if (patch.platforms) this.world.invalidate(true)
-    this.applyDebug()
+    this.applyConfig()
   }
 
   refresh() {

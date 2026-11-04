@@ -9,6 +9,7 @@ const flip = (p: number, a: number, b: number) => {
 
 export const interactions = {
   happy: {
+    ease: 0,
     frames: 16,
     fps: 14,
     loop: false,
@@ -69,6 +70,7 @@ export const interactions = {
     },
   },
   squish: {
+    ease: 0,
     frames: 8,
     fps: 10,
     loop: true,
@@ -91,6 +93,7 @@ export const interactions = {
     },
   },
   startle: {
+    ease: 0,
     frames: 10,
     fps: 16,
     loop: false,

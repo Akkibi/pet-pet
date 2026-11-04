@@ -17,6 +17,7 @@ const pet = createPet({ container: document.querySelector('main'), size: '10vh' 
 | `preset` | `golden` | Palette: `golden grey cream choco` (see [rendering](rendering.md)). |
 | `shape` | `soft` | Silhouette preset: `soft loaf head stripe block`. |
 | `appearance / physics / behavior / platforms / debug` | see `config.ts` | Partial overrides. |
+| `motion` | `{ blend: 1, turnTime: 0.18 }` | Transition duration multiplier (0 = off), left/right turn in seconds ([animations](animations.md#transitions)). |
 | `spawn` | random x, top | `{ x, y }` in viewport px; the pet falls in. |
 
 ## Methods

@@ -27,7 +27,9 @@ Each animation is baked lazily into one horizontal image strip (`fw × frames`) 
 
 ## View (`render/View.ts`)
 
-A fixed layer (`data-pet-ignore`) holding the shadow, a wrapper moved with `translate3d`, the canvas (`CANVAS` box in `u`) and an invisible hitbox. `drawStrip` blits one frame; `drawLive` draws the [ragdoll](physics.md) through `render/ragdoll.ts`, which picks the drawing frame so the face stays upright and switches to `back` from the legs' side.
+A fixed layer (`data-pet-ignore`) holding the shadow, a wrapper moved with `translate3d`, the canvas (`CANVAS` box in `u`) and an invisible hitbox. `drawStrip` blits one frame; `drawPose` draws a blended pose during [transitions](animations.md#transitions); `drawLive` draws the [ragdoll](physics.md) through `render/ragdoll.ts`, which picks the drawing frame so the face stays upright and switches to `back` from the legs' side.
+
+Facing turns are a CSS rotation fake: an angle goes 0 → π in `motion.turnTime` (0.18 s), the canvas gets `scaleX(cos)` (never thinner than 0.14) plus a small hop. It snaps when leaving the ragdoll.
 
 ## FX
 

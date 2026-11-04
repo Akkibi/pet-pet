@@ -179,6 +179,7 @@ export const reactions = {
     }),
   },
   surprised: {
+    ease: 0,
     frames: 12,
     fps: 14,
     loop: false,

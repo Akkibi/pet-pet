@@ -16,7 +16,7 @@ Falling → recover. Fast cursor close by → startle. Stroke level (hovering ba
 
 ## Tasks
 
-- `tasks.ts`: idle, wander, explore (surface picked by distance/height, avoiding recent ones), extra idle anims, sleep, follow (walk to cursor, look up/down, jump to the surface under a still cursor), startle (run away).
+- `tasks.ts`: idle, wander, explore (surface picked by distance/height, avoiding recent ones), extra idle anims, sleep, follow (walk to cursor, look up/down with hysteresis, turn only past 0.3 u, jump to the surface under a still cursor), startle (run away).
 - `social.ts`: react (+ FX cues), petted (roll after 4 quick clicks), wakeUp, squish (long press), purr, eat, watch (typing), afterRagdoll.
 
 ## Input
