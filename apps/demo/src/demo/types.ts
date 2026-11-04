@@ -1,4 +1,4 @@
-import type { Pet } from '../pet'
+import type { Pet } from 'pet-pet'
 
 export interface PageProps {
   pet: Pet | null

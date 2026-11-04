@@ -155,14 +155,13 @@ export class Ragdoll {
     for (let i = 0; i < 4; i++) {
       const leg = this.p[i + 2]
       const t = this.legTarget(i)
-      const dx = (t.x - leg.x) * k
-      const dy = (t.y - leg.y) * k
       const body = this.p[LEG_REST[i].attach]
-      const wl = leg.im / (leg.im + body.im)
-      leg.x += dx * wl
-      leg.y += dy * wl
-      body.x -= dx * (1 - wl)
-      body.y -= dy * (1 - wl)
+      const wl = (leg.im / (leg.im + body.im)) * k
+      const dx = (t.x - leg.x) * wl
+      const dy = (t.y - leg.y) * wl
+      leg.x += dx
+      leg.y += dy
+      this.impulse(leg.x, leg.y, -dx / leg.im, -dy / leg.im)
     }
     for (let it = 0; it < 3; it++) {
       this.link(0, 1, HALF * 2 * u, HALF * 2 * u)
@@ -182,20 +181,39 @@ export class Ragdoll {
     const c = this.center
     const gx = c.x + (a.x * g.t + n.x * g.n) * this.u
     const gy = c.y + (a.y * g.t + n.y * g.n) * this.u
-    const s = Math.min(0.5, 0.05 + ph.dragStiffness * 0.3)
-    const dx = (g.x - gx) * s
-    const dy = (g.y - gy) * s
-    const wf = Math.max(0, Math.min(1, 0.5 + g.t / (HALF * 2)))
+    const s = Math.min(0.8, (0.05 + ph.dragStiffness * 0.3) * 1.6)
+    const ex = (g.x - gx) * s
+    const ey = (g.y - gy) * s
     const [r, f] = this.p
-    r.x += dx * (1 - wf) * 1.6
-    r.y += dy * (1 - wf) * 1.6
-    f.x += dx * wf * 1.6
-    f.y += dy * wf * 1.6
+    const rx = gx - c.x
+    const ry = gy - c.y
+    const im = r.im / 2
+    const ii = r.im / (2 * (HALF * this.u) ** 2)
+    const kxx = im + ry * ry * ii
+    const kyy = im + rx * rx * ii
+    const kxy = -rx * ry * ii
+    const det = kxx * kyy - kxy * kxy
+    this.impulse(gx, gy, (kyy * ex - kxy * ey) / det, (kxx * ey - kxy * ex) / det)
     if (Math.abs(g.t) < 0.25) {
       const my = (r.y + f.y) / 2
       r.y += (my - r.y) * 0.03
       f.y += (my - f.y) * 0.03
     }
+  }
+
+  private impulse(px: number, py: number, jx: number, jy: number) {
+    const [r, f] = this.p
+    const half = HALF * this.u
+    const ax = (f.x - r.x) / (2 * half)
+    const ay = (f.y - r.y) / (2 * half)
+    const tau = (px - (r.x + f.x) / 2) * jy - (py - (r.y + f.y) / 2) * jx
+    const turn = (tau * r.im) / (2 * half)
+    const tx = (jx * r.im) / 2
+    const ty = (jy * r.im) / 2
+    r.x += tx + ay * turn
+    r.y += ty - ax * turn
+    f.x += tx - ay * turn
+    f.y += ty + ax * turn
   }
 
   private link(i: number, j: number, min: number, max: number) {

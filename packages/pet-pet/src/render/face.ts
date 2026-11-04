@@ -234,6 +234,7 @@ const FACES: Record<FaceStyle, FaceGeo> = {
 }
 
 const PIVOT = { x: 0.32, y: 0.3 }
+const HEAD = { x: 0.02, y: -0.13 }
 
 const oval = (ctx: CanvasRenderingContext2D, x: number, y: number, rx: number, ry: number, fill: string) => {
   ctx.beginPath()
@@ -278,8 +279,9 @@ export const drawFace = (
   const g = FACES[look.face] ?? FACES.mochi
   const sw = 0.016
   const t = p.tilt - rot * p.upright
+  const hb = look.headBump
   const enter = () => {
-    ctx.translate(p.fx, yt + p.fy)
+    ctx.translate(p.fx + HEAD.x * hb, yt + p.fy + HEAD.y * hb)
     if (t) {
       ctx.translate(PIVOT.x, PIVOT.y)
       ctx.rotate(t)

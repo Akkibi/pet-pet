@@ -1,6 +1,6 @@
 # Public API
 
-Entry: `src/pet/index.ts`. Zero dependencies, works in any page.
+Entry: `packages/pet-pet/src/index.ts`. Zero dependencies, works in any page. Install and bundles: [package](package.md).
 
 ```ts
 import { createPet } from 'pet-pet'

@@ -4,11 +4,12 @@ Flat style, no outline: a rounded rectangle on 4 legs, 3/4 view facing right (+x
 
 ## Layers (`render/layers.ts`, `render/face.ts`)
 
-Painter order: far legs (shaded) → ears → tail → head bump → body → belly → stripe → highlight → face (muzzle, blush, eyes, nose, mouth, whiskers, prop) → near legs.
+Painter order: far legs (shaded) → ears → tail → body (+ head) → belly → stripe → highlight → face (muzzle, blush, eyes, nose, mouth, whiskers, prop) → near legs.
 
 `Appearance` = palette (`fur belly line paws inner blush eyes nose`) + shape (`roundness chubby legLength headBump stripe bellyStyle bellyWidth`) + face (`face earSize eyeSize cheekSize whiskers`).
 
 - `SHAPES` presets: `soft` (default, mix of loaf and block, belly ellipse), `loaf` (rounder, belly band), `head` (head bump), `stripe` (dorsal stripe), `block` (square, no belly).
+- `headBump` (0–1): grows a head circle (`headCircle`) at the front-top, merged into the body path so belly, stripe and pouch clip to one silhouette. The face (`HEAD` offset in `face.ts`) and the ears move up and forward with it.
 - `bellyStyle`: `patch` (centered ellipse clipped by the body, `bellyWidth` = its x radius), `band`, `none`.
 - `face`: `mochi` (default: oval glossy eyes, small muzzle), `classic` (big muzzle), `pouch` (cheek pouch clipped by the body). Geometry per style in `FACES` (`face.ts`).
 

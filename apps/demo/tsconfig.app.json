@@ -15,6 +15,10 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "paths": {
+      "pet-pet": ["../../packages/pet-pet/src/index.ts"],
+      "pet-pet/react": ["../../packages/pet-pet/src/react.ts"]
+    },
 
     /* Linting */
     "noUnusedLocals": true,

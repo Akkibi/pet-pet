@@ -1,8 +1,8 @@
 import { Leva } from 'leva'
 import { useEffect, useRef, useState } from 'react'
+import { usePet } from 'pet-pet/react'
 import { LEVA_THEME, usePetControls } from './demo/controls'
 import { PAGES } from './demo/pages'
-import { createPet, type Pet } from './pet'
 
 type PageId = (typeof PAGES)[number]['id']
 
@@ -13,19 +13,8 @@ const readHash = (): PageId => {
 
 export default function App() {
   const stage = useRef<HTMLElement>(null)
-  const [pet, setPet] = useState<Pet | null>(null)
   const [page, setPage] = useState<PageId>(readHash)
-
-  useEffect(() => {
-    const el = stage.current
-    if (!el) return
-    const p = createPet({ container: el, root: el })
-    setPet(p)
-    return () => {
-      p.destroy()
-      setPet(null)
-    }
-  }, [])
+  const pet = usePet({ container: stage, root: stage })
 
   usePetControls(pet)
 
@@ -65,7 +54,16 @@ export default function App() {
             ))}
           </select>
         </label>
-        <span className="ml-auto hidden text-xs text-muted md:inline">clic = caresse · glisser = lancer · maintenir = câlin</span>
+        <span className="ml-auto hidden text-xs text-muted lg:inline">clic = caresse · glisser = lancer · maintenir = câlin</span>
+        <button
+          type="button"
+          onClick={() => setPage('install')}
+          className={`ml-auto rounded-lg px-3 py-1 text-sm font-semibold transition-colors lg:ml-0 ${
+            page === 'install' ? 'bg-honey text-ink' : 'bg-honey/40 text-ink hover:bg-honey'
+          }`}
+        >
+          Installer
+        </button>
         <a
           href="https://github.com/Akkibi/pet-pet"
           className="rounded-lg px-2 py-1 text-sm text-muted hover:bg-sand hover:text-ink"

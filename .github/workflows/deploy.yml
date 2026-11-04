@@ -24,11 +24,13 @@ jobs:
           node-version: 22
           cache: yarn
       - run: yarn install --frozen-lockfile
+      - run: yarn type-check
+      - run: yarn lint
       - run: yarn test
       - run: yarn build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: apps/demo/dist
   deploy:
     needs: build
     runs-on: ubuntu-latest

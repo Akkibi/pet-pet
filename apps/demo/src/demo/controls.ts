@@ -10,7 +10,7 @@ import {
   type Pet,
   type PresetName,
   type ShapeName,
-} from '../pet'
+} from 'pet-pet'
 
 const A = DEFAULT_CONFIG.appearance
 const P = DEFAULT_CONFIG.physics

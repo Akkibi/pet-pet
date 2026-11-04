@@ -98,6 +98,8 @@ const drawEar = (ctx: CanvasRenderingContext2D, x: number, y: number, r: number,
   ctx.restore()
 }
 
+export const headCircle = (hb: number, yt: number) => ({ x: 0.28 + 0.06 * hb, y: yt + 0.2 - 0.1 * hb, r: 0.2 + 0.1 * hb })
+
 const paths = new WeakMap<Appearance, Path2D>()
 const bodyPath = (look: Appearance, yt: number, yb: number) => {
   let path = paths.get(look)
@@ -105,6 +107,11 @@ const bodyPath = (look: Appearance, yt: number, yb: number) => {
     const h = yb - yt
     path = new Path2D()
     path.roundRect(-GEO.halfW, yt, GEO.halfW * 2, h, Math.min(h / 2, look.roundness * h))
+    if (look.headBump > 0.01) {
+      const c = headCircle(look.headBump, yt)
+      path.moveTo(c.x + c.r, c.y)
+      path.arc(c.x, c.y, c.r, 0, TAU)
+    }
     paths.set(look, path)
   }
   return path
@@ -117,15 +124,13 @@ const drawBody = (ctx: CanvasRenderingContext2D, p: Pose, look: Appearance, yt: 
   const k = h / GEO.bodyH
   const hb = look.headBump
   if (!p.back) {
-    const lift = hb * 0.1
-    drawEar(ctx, 0.36, yt - 0.005 - lift, 0.075 * look.earSize, p.earF - p.earDown * 0.8, look)
-    drawEar(ctx, 0.1 + hb * 0.06, yt + 0.02 - lift * 0.7, 0.085 * look.earSize, p.earN - p.earDown * 0.8, look)
+    drawEar(ctx, 0.36 + hb * 0.08, yt - 0.005 - hb * 0.145, 0.075 * look.earSize, p.earF - p.earDown * 0.8, look)
+    drawEar(ctx, 0.1 + hb * 0.12, yt + 0.02 - hb * 0.165, 0.085 * look.earSize, p.earN - p.earDown * 0.8, look)
   }
   ctx.beginPath()
   ctx.ellipse(-0.53, yt + 0.34 * k + p.tail * 0.02, 0.045, 0.04, 0, 0, TAU)
   ctx.fillStyle = look.fur
   ctx.fill()
-  if (hb > 0.01) circle(ctx, 0.28, yt + 0.24 - 0.06 * hb, 0.2 + 0.08 * hb, look.fur)
   const shape = bodyPath(look, yt, yb)
   ctx.fillStyle = look.fur
   ctx.fill(shape)

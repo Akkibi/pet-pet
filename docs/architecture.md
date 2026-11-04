@@ -1,6 +1,8 @@
 # Architecture
 
-`src/pet/Pet.ts` owns every module and runs one `requestAnimationFrame` loop.
+Yarn workspaces monorepo: the library in `packages/pet-pet` ([package](package.md)), the demo in `apps/demo` ([demo](demo.md)). Paths below are relative to `packages/pet-pet/src`.
+
+`Pet.ts` owns every module and runs one `requestAnimationFrame` loop.
 
 | module | role | doc |
 | --- | --- | --- |
@@ -13,6 +15,7 @@
 | `input/PointerInput.ts` | click / long press / drag / stroke / cursor tracking | [brain](brain.md#input) |
 | `dom.ts` | `data-pet-*` click delegation, typing watch | [api](api.md#data-attributes) |
 | `debug.ts` | surfaces overlay | [demo](demo.md) |
+| `react.ts` | `usePet` / `HamsterPet` (separate `pet-pet/react` entry) | [package](package.md) |
 
 ## Frame order
 

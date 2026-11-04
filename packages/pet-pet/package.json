@@ -1,0 +1,63 @@
+{
+  "name": "pet-pet",
+  "version": "0.1.0",
+  "description": "A tiny hamster that lives on your web page: roams, hops onto UI elements, reacts to the page, ragdoll physics when dragged.",
+  "keywords": [
+    "desktop-pet",
+    "hamster",
+    "mascot",
+    "pet",
+    "canvas",
+    "ragdoll",
+    "animation"
+  ],
+  "license": "MIT",
+  "author": "Akkibi",
+  "homepage": "https://akkibi.github.io/pet-pet/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akkibi/pet-pet.git",
+    "directory": "packages/pet-pet"
+  },
+  "bugs": "https://github.com/Akkibi/pet-pet/issues",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/pet-pet.umd.cjs",
+  "module": "./dist/pet-pet.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/pet-pet.iife.js",
+  "jsdelivr": "./dist/pet-pet.iife.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/pet-pet.js",
+      "require": "./dist/pet-pet.umd.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vite build && vite build --mode react && tsc -p tsconfig.build.json && node scripts/dts-ext.mjs",
+    "test": "vitest run",
+    "prepack": "yarn build"
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1"
+  }
+}

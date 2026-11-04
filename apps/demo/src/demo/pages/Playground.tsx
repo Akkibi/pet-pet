@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { REACTION_ALIASES, REACTION_NAMES, type PetEventMap, type PetEventName, type ReactionAlias, type ReactionName } from '../../pet'
+import { REACTION_ALIASES, REACTION_NAMES, type PetEventMap, type PetEventName, type ReactionAlias, type ReactionName } from 'pet-pet'
 import type { PageProps } from '../types'
 
 interface LogEntry {
