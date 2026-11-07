@@ -18,4 +18,4 @@ landing · dashboard · todo · form · blog · chat · gallery · playground ·
 
 ## Deploy
 
-`.github/workflows/deploy.yml` runs on push to `main`: type-check, lint, tests, `yarn build` (library then demo, `base: './'`), and publishes `apps/demo/dist` to GitHub Pages. Vercel (canonical, https://pet-pet.akkibi.art/) builds the same output from the root `vercel.json` ([seo](seo.md)).
+`.github/workflows/deploy.yml` runs on push to `main`: type-check, lint, tests, `yarn build` (library then demo, `base: './'`), and publishes `apps/demo/dist` to GitHub Pages. Vercel (canonical, https://petpet.akkibi.art/) builds the same output from the root `vercel.json` ([seo](seo.md)).
