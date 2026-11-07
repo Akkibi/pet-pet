@@ -1,0 +1,71 @@
+# pet-pet
+
+> Librairie TypeScript gratuite et sans dépendance qui fait vivre un hamster virtuel sur une page web. Dessiné en Canvas2D, il se promène dans le conteneur qu'on lui donne, choisit des cartes et des boutons comme plateformes et saute dessus, suit le curseur, fait la sieste, mange des graines, regarde l'utilisateur taper et réagit à ce qui se passe sur la page. Clic pour le caresser, maintien pour le serrer, glisser-lancer : il devient un ragdoll (physique Verlet). Hook React optionnel.
+> In English: pet-pet is a free, zero-dependency TypeScript library that adds an interactive hamster "desktop pet" to any web page, with page reactions, a React hook and ragdoll physics when thrown.
+
+- Site (démo + guide d'installation) : https://pet-pet.akkibi.art/
+- Miroir GitHub Pages : https://akkibi.github.io/pet-pet/
+- Code source : https://github.com/Akkibi/pet-pet
+- Paquet npm : `pet-pet` (pas encore publié sur le registre npm)
+- Auteur : Akira Valade (@akkibi) https://akkibi.art
+- Licence : MIT
+- Stack : TypeScript, Canvas2D, aucune dépendance ; entrée `pet-pet/react` (React ≥ 17, peer optionnel). Bundles ESM, UMD et IIFE (global `PetPet`). Démo : React, Tailwind, Leva.
+
+## Installation
+
+```sh
+yarn add pet-pet      # ou : npm install pet-pet / pnpm add pet-pet
+```
+
+```ts
+import { createPet } from 'pet-pet'
+
+const pet = createPet({
+  container: document.querySelector('main'), // optionnel, par défaut le viewport
+  size: '10vh',
+})
+
+pet.react('success', { say: 'Saved!' })
+```
+
+Sans JavaScript, via des attributs :
+
+```html
+<button data-pet-react="approve" data-pet-say="Nice!">Save</button>
+<button data-pet-react="delete">Delete</button>
+<section data-pet-platform>toujours une plateforme</section>
+<aside data-pet-ignore>jamais une plateforme</aside>
+```
+
+React :
+
+```tsx
+import { useRef } from 'react'
+import { usePet } from 'pet-pet/react'
+
+export function App() {
+  const main = useRef<HTMLElement>(null)
+  const pet = usePet({ container: main, preset: 'golden' })
+  return <main ref={main}><button onClick={() => pet?.react('approve')}>Save</button></main>
+}
+```
+
+Balise script : `<script src="https://unpkg.com/pet-pet@0.1"></script>` puis `PetPet.createPet({ size: '10vh' })`.
+
+## API
+
+- Options : `container`, `root`, `size` (px, vh, vw, vmin), `preset` (`golden grey cream choco`), `shape` (`soft loaf head stripe block`), `appearance`, `physics`, `behavior`, `motion`, `platforms`, `spawn`.
+- Méthodes : `react(name, { say })`, `say(text)`, `goTo(el)`, `feed()`, `sleep()`, `wake()`, `set(patch)`, `on(event, fn)`, `refresh()`, `destroy()`.
+- Événements : `pet`, `grab`, `throw`, `impact`, `land`, `state`, `react`, `eat`, `sleep`, `wake`.
+- Réactions : `approve cancel delete error success wave thinking…` (liste complète : `REACTION_NAMES`).
+- [Référence complète de l'API](https://github.com/Akkibi/pet-pet/blob/main/docs/api.md) : options, méthodes, événements, attributs `data-pet-*`.
+- [README du paquet](https://github.com/Akkibi/pet-pet/blob/main/packages/pet-pet/README.md) : installation, React, balise script, bundles.
+
+## Pages de la démo
+
+La démo est une seule page ; chaque écran de test est une ancre (hash). Le hamster y vit en direct et un panneau Leva règle son apparence, sa physique et son comportement.
+
+- [Accueil](https://pet-pet.akkibi.art/#landing) : fausse landing page avec boutons à réactions.
+- [Tableau de bord](https://pet-pet.akkibi.art/#dashboard), [Tâches](https://pet-pet.akkibi.art/#todo), [Formulaire](https://pet-pet.akkibi.art/#form), [Blog](https://pet-pet.akkibi.art/#blog), [Chat](https://pet-pet.akkibi.art/#chat), [Galerie](https://pet-pet.akkibi.art/#gallery) : interfaces types sur lesquelles le hamster grimpe et réagit.
+- [Bac à sable](https://pet-pet.akkibi.art/#playground) : toutes les commandes au même endroit (réactions, actions, plateformes amovibles, journal des événements).
+- [Installation](https://pet-pet.akkibi.art/#install) : installation yarn/npm/pnpm, usage vanilla, React et balise script, puces de réactions qui pilotent le hamster, options et méthodes.

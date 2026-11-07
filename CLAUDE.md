@@ -13,6 +13,7 @@ A zero-dependency TypeScript "desktop pet" library: a flat golden hamster that r
 - [docs/world.md](docs/world.md): DOM scan, platform segments, jump planner.
 - [docs/brain.md](docs/brain.md): coroutine tasks, priorities, sensing, input.
 - [docs/demo.md](docs/demo.md): demo app, Leva panel, test pages, install page, deploy.
+- [docs/seo.md](docs/seo.md): head metadata, JSON-LD, robots/sitemap/llms.txt, Vercel config.
 
 ## Commands (yarn, from the root)
 

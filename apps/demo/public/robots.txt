@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pet-pet.akkibi.art/sitemap.xml

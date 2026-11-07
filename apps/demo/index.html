@@ -4,9 +4,82 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pet-pet</title>
+    <title>pet-pet · Un hamster virtuel qui vit sur votre site web</title>
+    <meta name="description" content="Librairie TypeScript gratuite et sans dépendance : un hamster virtuel se promène sur votre site, saute sur les boutons, réagit aux actions, se lance en ragdoll." />
+    <link rel="canonical" href="https://pet-pet.akkibi.art/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Akira Valade" />
+    <meta name="theme-color" content="#fbf6ef" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="pet-pet" />
+    <meta property="og:title" content="pet-pet · Un hamster virtuel qui vit sur votre site web" />
+    <meta property="og:description" content="Librairie TypeScript gratuite et sans dépendance : un hamster virtuel se promène sur votre site, saute sur les boutons, réagit aux actions, se lance en ragdoll." />
+    <meta property="og:url" content="https://pet-pet.akkibi.art/" />
+    <meta property="og:image" content="https://pet-pet.akkibi.art/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Un hamster doré dessiné en Canvas2D assis sur les cartes d'une page de démo aux tons crème et miel." />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="pet-pet · Un hamster virtuel qui vit sur votre site web" />
+    <meta name="twitter:description" content="Un hamster virtuel pour vos pages web : librairie TypeScript sans dépendance, hook React, réactions et physique ragdoll." />
+    <meta name="twitter:image" content="https://pet-pet.akkibi.art/og-image.jpg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://pet-pet.akkibi.art/#website",
+            "url": "https://pet-pet.akkibi.art/",
+            "name": "pet-pet",
+            "description": "Démo et guide d'installation de pet-pet, une librairie TypeScript qui ajoute un hamster virtuel interactif à n'importe quelle page web.",
+            "inLanguage": "fr",
+            "author": { "@id": "https://akkibi.art/#person" }
+          },
+          {
+            "@type": "SoftwareSourceCode",
+            "@id": "https://pet-pet.akkibi.art/#library",
+            "name": "pet-pet",
+            "url": "https://pet-pet.akkibi.art/",
+            "description": "Librairie TypeScript sans dépendance qui fait vivre un hamster sur une page web : il se promène dans un conteneur, saute sur les cartes et boutons, suit le curseur, dort, mange des graines, réagit aux actions (approve, delete, error, success…) et devient un ragdoll physique (Verlet) quand on le lance. Hook React optionnel (pet-pet/react).",
+            "image": "https://pet-pet.akkibi.art/og-image.jpg",
+            "inLanguage": "fr",
+            "codeRepository": "https://github.com/Akkibi/pet-pet",
+            "programmingLanguage": ["TypeScript", "JavaScript"],
+            "runtimePlatform": "Web browser (Canvas2D)",
+            "license": "https://opensource.org/licenses/MIT",
+            "keywords": ["desktop pet", "hamster", "mascotte", "animation", "canvas", "ragdoll", "React"],
+            "sameAs": ["https://github.com/Akkibi/pet-pet"],
+            "isAccessibleForFree": true,
+            "isPartOf": { "@id": "https://pet-pet.akkibi.art/#website" },
+            "author": { "@id": "https://akkibi.art/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://akkibi.art/#person",
+            "name": "Akira Valade",
+            "alternateName": "Akkibi",
+            "url": "https://akkibi.art/",
+            "jobTitle": "Creative developer",
+            "sameAs": ["https://www.linkedin.com/in/akkibi/", "https://github.com/Akkibi", "https://www.instagram.com/akkibi_/"]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
+    <noscript>
+      <h1>pet-pet : un hamster virtuel qui vit sur votre site web</h1>
+      <p>pet-pet est une librairie TypeScript gratuite (MIT) et sans dépendance. Un hamster dessiné en Canvas2D se promène sur la page, saute sur les cartes et les boutons, suit le curseur, fait la sieste, mange des graines et réagit aux actions de l'utilisateur. On peut le caresser, le serrer, le lancer : il devient un ragdoll.</p>
+      <p>Installation : <code>yarn add pet-pet</code>, puis <code>createPet({ container: document.querySelector('main') })</code>. Un hook React est inclus (<code>pet-pet/react</code>). Cette démo nécessite JavaScript.</p>
+      <ul>
+        <li><a href="#landing">Accueil</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#playground">Bac à sable</a></li>
+        <li><a href="https://github.com/Akkibi/pet-pet">Code source sur GitHub</a></li>
+      </ul>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
